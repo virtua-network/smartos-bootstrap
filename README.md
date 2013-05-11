@@ -1,0 +1,4 @@
+bootstrap
+=========
+
+SmartOS CN bootstrap
