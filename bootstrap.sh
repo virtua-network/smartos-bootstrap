@@ -31,6 +31,6 @@ pkgin -fy up
 ### Step 2. Install Salt via bootstrap ###
 echo "[*] STEP 2 - Salt Stack install"
 curl -s -k -L ${SALT_BS_BASEURL}/${SALT_BS_VER} | \
-sh -s -- -M -N git develop
+sh -s -- git develop
 
 echo "[DONE]"
