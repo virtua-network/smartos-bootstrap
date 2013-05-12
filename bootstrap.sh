@@ -9,7 +9,7 @@ PKGIN_BS_BASEURL="http://pkgsrc.joyent.com/packages/SmartOS/bootstrap"
 PKGIN_BS_VER="bootstrap-2013Q1-x86_64.tar.gz"
 PKGIN_VTA_REPO="http://tornado.virtua.ch/smartos_local/packages/All"
 PKGIN_CNF_PATH="/opt/local/etc/pkgin/repositories.conf"
-SALT_BS_BASEURL="https://raw.github.com/mguegan/salt-bootstrap/develop"
+SALT_BS_BASEURL="https://raw.github.com/virtua-network/salt-bootstrap/develop"
 SALT_BS_VER="bootstrap-salt.sh"
 
 ### Babyproof ###
