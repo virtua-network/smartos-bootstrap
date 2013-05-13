@@ -5,12 +5,13 @@
 # To be used directly on a CN after a fresh install
 
 ### Variables ###
-PKGIN_BS_BASEURL="http://pkgsrc.joyent.com/packages/SmartOS/bootstrap"
-PKGIN_BS_VER="bootstrap-2013Q1-x86_64.tar.gz"
+BS_PKGIN_BASEURL="http://pkgsrc.joyent.com/packages/SmartOS/bootstrap"
+BS_PKGIN_VER="bootstrap-2013Q1-x86_64.tar.gz"
 PKGIN_VTA_REPO="http://tornado.virtua.ch/smartos_local/packages/All"
 PKGIN_CNF_PATH="/opt/local/etc/pkgin/repositories.conf"
-SALT_BS_BASEURL="https://raw.github.com/virtua-network/salt-bootstrap/develop"
-SALT_BS_VER="bootstrap-salt.sh"
+BS_SALT_BASEURL="https://raw.github.com/virtua-network/salt-bootstrap/develop"
+BS_SALT_VER="bootstrap-salt.sh"
+BS_SALT_ETC_DIR="/opt/local/etc/salt"
 
 ### Babyproof ###
 if [[ -f /opt/local/bin/pkgin ]]; then
@@ -22,7 +23,7 @@ fi
 # From http://wiki.smartos.org/display/DOC/Installing+pkgin
 echo "[*] STEP 1 - pkgin install on the CN"
 cd /
-curl -s -k ${PKGIN_BS_BASEURL}/${PKGIN_BS_VER} | \
+curl -s -k ${BS_PKGIN_BASEURL}/${BS_PKGIN_VER} | \
 gzcat | tar -xf -
 pkg_admin rebuild
 echo ${PKGIN_VTA_REPO} >> ${PKGIN_CNF_PATH} 
@@ -30,7 +31,7 @@ pkgin -fy up
 
 ### Step 2. Install Salt via bootstrap ###
 echo "[*] STEP 2 - Salt Stack install"
-curl -s -k -L ${SALT_BS_BASEURL}/${SALT_BS_VER} | \
-sh -s -- git develop
+curl -s -k -L ${BS_SALT_BASEURL}/${BS_SALT_VER} | \
+env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- git develop
 
 echo "[DONE]"
