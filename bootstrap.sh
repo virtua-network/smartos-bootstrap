@@ -30,6 +30,7 @@ sed -I. "s/pkgsrc.joyent.com/pkgsrc-eu-ams.joyent.com/g" ${PKGIN_CNF_PATH}
 pkgin -fy up
 
 ### Step 2. Install packages not -yet- distributed by Joyent
+echo "[*] STEP 2 - install packages that are not *yet* distributed by Joyent"
 pkgin -y in libuuid python27 py27-setuptools
 pkg_add ${PKGIN_VTA_REPO}/msgpack-0.5.7.tgz
 pkg_add ${PKGIN_VTA_REPO}/zeromq-3.2.3.tgz
@@ -39,7 +40,7 @@ pkg_add ${PKGIN_VTA_REPO}/py27-jinja2-2.6.tgz
 pkg_add ${PKGIN_VTA_REPO}/py27-msgpack-0.1.13.tgz
 
 ### Step 3. Install Salt via bootstrap ###
-echo "[*] STEP 2 - Salt Stack install"
+echo "[*] STEP 3 - Salt Stack install"
 curl -s -k -L ${BS_SALT_BASEURL}/${BS_SALT_VER} | \
 env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- git develop
 
