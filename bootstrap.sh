@@ -5,7 +5,7 @@
 # To be used directly on a CN after a fresh install
 
 ### Variables ###
-BS_PKGIN_BASEURL="http://pkgsrc.joyent.com/packages/SmartOS/bootstrap"
+BS_PKGIN_BASEURL="http://pkgsrc-eu-ams.joyent.com/packages/SmartOS/bootstrap"
 BS_PKGIN_VER="bootstrap-2013Q1-x86_64.tar.gz"
 PKGIN_VTA_REPO="http://tornado.virtua.ch/smartos_local/packages/All"
 PKGIN_CNF_PATH="/opt/local/etc/pkgin/repositories.conf"
@@ -26,10 +26,18 @@ cd /
 curl -s -k ${BS_PKGIN_BASEURL}/${BS_PKGIN_VER} | \
 gzcat | tar -xf -
 pkg_admin rebuild
-echo ${PKGIN_VTA_REPO} >> ${PKGIN_CNF_PATH} 
+sed -I. "s/pkgsrc.joyent.com/pkgsrc-eu-ams.joyent.com/g" ${PKGIN_CNF_PATH}
 pkgin -fy up
 
-### Step 2. Install Salt via bootstrap ###
+### Step 2. Install packages not -yet- distributed by Joyent
+pkgin -y in libuuid python27 py27-setuptools
+pkg_add ${PKGIN_VTA_REPO}/msgpack-0.5.7.tgz
+pkg_add ${PKGIN_VTA_REPO}/zeromq-3.2.3.tgz
+pkg_add ${PKGIN_VTA_REPO}/py27-zmq-2.2.0.1.tgz
+pkg_add ${PKGIN_VTA_REPO}/py27-m2crypto-0.21.1nb2.tgz
+pkg_add ${PKGIN_VTA_REPO}/py27-jinja2-2.6.tgz
+
+### Step 3. Install Salt via bootstrap ###
 echo "[*] STEP 2 - Salt Stack install"
 curl -s -k -L ${BS_SALT_BASEURL}/${BS_SALT_VER} | \
 env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- git develop
