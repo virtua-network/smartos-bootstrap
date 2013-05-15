@@ -36,6 +36,7 @@ pkg_add ${PKGIN_VTA_REPO}/zeromq-3.2.3.tgz
 pkg_add ${PKGIN_VTA_REPO}/py27-zmq-2.2.0.1.tgz
 pkg_add ${PKGIN_VTA_REPO}/py27-m2crypto-0.21.1nb2.tgz
 pkg_add ${PKGIN_VTA_REPO}/py27-jinja2-2.6.tgz
+pkg_add ${PKGIN_VTA_REPO}/py27-msgpack-0.1.13.tgz
 
 ### Step 3. Install Salt via bootstrap ###
 echo "[*] STEP 2 - Salt Stack install"
