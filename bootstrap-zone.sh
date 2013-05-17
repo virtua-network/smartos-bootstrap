@@ -5,8 +5,6 @@
 # To be used directly into a Zone
 
 ### Variables ###
-BS_PKGIN_BASEURL="http://pkgsrc-eu-ams.joyent.com/packages/SmartOS/bootstrap"
-BS_PKGIN_VER="bootstrap-2013Q1-x86_64.tar.gz"
 PKGIN_VTA_REPO="http://tornado.virtua.ch/smartos_local/packages/All"
 PKGIN_CNF_PATH="/opt/local/etc/pkgin/repositories.conf"
 BS_SALT_BASEURL="https://raw.github.com/virtua-network/salt-bootstrap/develop"
@@ -28,8 +26,6 @@ esac
 ### Step 1. Prepare the environment ###
 echo "[*] STEP 1 - Prepare the environment"
 cd /
-sed -i "s/pkgsrc.joyent.com/pkgsrc-eu-ams.joyent.com/g" ${PKGIN_CNF_PATH}
-pkgin -fy up
 pkgin -y in libuuid python27 py27-setuptools
 pkg_add ${PKGIN_VTA_REPO}/msgpack-0.5.7.tgz
 pkg_add ${PKGIN_VTA_REPO}/zeromq-3.2.3.tgz
