@@ -14,7 +14,7 @@ BS_SALT_VER="bootstrap-salt.sh"
 BS_SALT_ETC_DIR="/opt/local/etc/salt"
 
 ### Babyproof ###
-if [[ -f /opt/local/bin/pkgin ]]; then
+if [ -f /opt/local/bin/pkgin ]; then
 	echo "[ERROR] pkgin is already installed"
 	exit 1
 fi
