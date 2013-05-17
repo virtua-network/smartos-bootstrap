@@ -20,15 +20,15 @@ if [ $(whoami) != "root" ] ; then
     exit 1
 fi
 
-if [ $1 = "master" ]; then
-    echo "[!!] Installing salt master"
-    BS_SALT_TYPE="master"
-fi
+case $1 in
+    "master") echo "[!!] Installing salt master";BS_SALT_TYPE="master";;
+    "*") echo "[!!] Installing salt minion";;
+esac
 
 ### Step 1. Prepare the environment ###
 echo "[*] STEP 1 - Prepare the environment"
 cd /
-sed -I. "s/pkgsrc.joyent.com/pkgsrc-eu-ams.joyent.com/g" ${PKGIN_CNF_PATH}
+sed -i "s/pkgsrc.joyent.com/pkgsrc-eu-ams.joyent.com/g" ${PKGIN_CNF_PATH}
 pkgin -fy up
 pkgin -y in libuuid python27 py27-setuptools
 pkg_add ${PKGIN_VTA_REPO}/msgpack-0.5.7.tgz
