@@ -44,7 +44,7 @@ pkg_add ${PKGIN_VTA_REPO}/py27-msgpack-0.1.13.tgz
 echo "[*] STEP 2 - Salt Stack install"
 if [ ${BS_SALT_TYPE} = "master" ]; then
     curl -s -k -L ${BS_SALT_BASEURL}/${BS_SALT_VER} | \
-    env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- -M git develop
+    env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- -M git 2013Q1
 else
     curl -s -k -L ${BS_SALT_BASEURL}/${BS_SALT_VER} | \
     env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- git develop

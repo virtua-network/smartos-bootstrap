@@ -48,7 +48,7 @@ pkg_add ${PKGIN_VTA_REPO}/py27-msgpack-0.1.13.tgz
 ### Step 3. Install Salt via bootstrap ###
 echo "[*] STEP 3 - Salt Stack install"
 curl -s -k -L ${BS_SALT_BASEURL}/${BS_SALT_VER} | \
-env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- git develop
+env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- git 2013Q1 
 
 ### Step 4. Naming the Node ###
 echo "[*] STEP 4 - Naming Node"
