@@ -9,14 +9,20 @@ BS_PKGIN_BASEURL="http://pkgsrc-eu-ams.joyent.com/packages/SmartOS/bootstrap"
 BS_PKGIN_VER="bootstrap-2013Q1-x86_64.tar.gz"
 PKGIN_VTA_REPO="http://tornado.virtua.ch/smartos_local/packages/All"
 PKGIN_CNF_PATH="/opt/local/etc/pkgin/repositories.conf"
-BS_SALT_BASEURL="https://raw.github.com/virtua-network/salt-bootstrap/develop"
-BS_SALT_VER="bootstrap-salt.sh"
+BS_SALT_BASEURL="https://raw.github.com/virtua-network/salt-bootstrap"
+BS_SALT_VER="2013Q1/bootstrap-salt.sh"
 BS_SALT_ETC_DIR="/opt/local/etc/salt"
+NODE_NAME="newnode"
 
-### Babyproof ###
+### Basic checks ###
 if [ -f /opt/local/bin/pkgin ]; then
 	echo "[ERROR] pkgin is already installed"
 	exit 1
+fi
+
+if [ $1 ] ; then
+    echo "The Node Name will be set to $1."
+    NODE_NAME=$1
 fi
 
 ### Step 1. Install pkgin in the CN ###
@@ -44,4 +50,8 @@ echo "[*] STEP 3 - Salt Stack install"
 curl -s -k -L ${BS_SALT_BASEURL}/${BS_SALT_VER} | \
 env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- git develop
 
+### Step 4. Naming the Node ###
+echo "[*] STEP 4 - Naming Node"
+sed -I. "s/\#id\:/id\:${NODE_NAME}/" ${BS_SALT_ETC_DIR}/minion
+svcadm restart salt-minion
 echo "[DONE]"

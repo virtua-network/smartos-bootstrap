@@ -7,10 +7,11 @@
 ### Variables ###
 PKGIN_VTA_REPO="http://tornado.virtua.ch/smartos_local/packages/All"
 PKGIN_CNF_PATH="/opt/local/etc/pkgin/repositories.conf"
-BS_SALT_BASEURL="https://raw.github.com/virtua-network/salt-bootstrap/develop"
-BS_SALT_VER="bootstrap-salt.sh"
+BS_SALT_BASEURL="https://raw.github.com/virtua-network/salt-bootstrap"
+BS_SALT_VER="2013Q1/bootstrap-salt.sh"
 BS_SALT_ETC_DIR="/opt/local/etc/salt"
 BS_SALT_TYPE="minion"
+NODE_NAME="newnode"
 
 ### Basic checks
 if [ $(whoami) != "root" ] ; then
@@ -22,6 +23,11 @@ case $1 in
     "master") echo "[!!] Installing salt master";BS_SALT_TYPE="master";;
     "*") echo "[!!] Installing salt minion";;
 esac
+
+if [ $2 ] ; then
+    echo "The Node Name will be set to $2."
+    NODE_NAME=$2
+fi
 
 ### Step 1. Prepare the environment ###
 echo "[*] STEP 1 - Prepare the environment"
@@ -44,4 +50,8 @@ else
     env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- git develop
 fi
 
+### Step 3. Naming the Node ###
+echo "[*] STEP 3 - Naming Node"
+sed -I. "s/\#id\:/id\:${NODE_NAME}/" ${BS_SALT_ETC_DIR}/minion
+svcadm restart salt-minion
 echo "[DONE]"
