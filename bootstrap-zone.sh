@@ -47,7 +47,7 @@ if [ ${BS_SALT_TYPE} = "master" ]; then
     env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- -M git 2013Q1
 else
     curl -s -k -L ${BS_SALT_BASEURL}/${BS_SALT_VER} | \
-    env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- git develop
+    env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- git 2013Q1 
 fi
 
 ### Step 3. Naming the Node ###
