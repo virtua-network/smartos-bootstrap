@@ -53,5 +53,7 @@ fi
 ### Step 3. Naming the Node ###
 echo "[*] STEP 3 - Naming Node"
 sed -i.orig "s/\#id\:/id\:\ ${NODE_NAME}/" ${BS_SALT_ETC_DIR}/minion
+sed -i.orig "s/\#startup_states\:\ \'\'/startup_states\:\ \'highstate\'/" \
+    ${BS_SALT_ETC_DIR}/minion
 svcadm restart salt-minion
 echo "[DONE]"

@@ -53,5 +53,7 @@ env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- git 2013Q1
 ### Step 4. Naming the Node ###
 echo "[*] STEP 4 - Naming Node"
 sed -i.orig "s/\#id\:/id\:\ ${NODE_NAME}/" ${BS_SALT_ETC_DIR}/minion
+sed -i.orig "s/\#startup_states\:\ \'\'/startup_states\:\ \'highstate\'/" \
+    ${BS_SALT_ETC_DIR}/minion
 svcadm restart salt-minion
 echo "[DONE]"
