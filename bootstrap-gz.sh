@@ -9,17 +9,27 @@ BS_PKGIN_BASEURL="http://pkgsrc-eu-ams.joyent.com/packages/SmartOS/bootstrap"
 BS_PKGIN_VER="bootstrap-2013Q1-x86_64.tar.gz"
 PKGIN_VTA_REPO="http://tornado.virtua.ch/smartos_local/packages/All"
 PKGIN_CNF_PATH="/opt/local/etc/pkgin/repositories.conf"
-BS_VERSION="$2:-2013Q1"
+BS_VERSION="2013Q1"
 BS_SALT_BASEURL="https://raw.github.com/virtua-network/salt-bootstrap"
 BS_SALT_VER="${BS_VERSION}/bootstrap-salt.sh"
 BS_SALT_ETC_DIR="/opt/local/etc/salt"
-NODE_NAME="$1:-newnode"
+NODE_NAME="newnode"
 
 ### Basic checks ###
 if [ -f /opt/local/bin/pkgin ]; then
 	echo "[ERROR] pkgin is already installed"
 	exit 1
 fi
+
+if [ "$#" -gt 2 ]; then
+    echo "[ERROR] sorry this script takes maximum 2 arguments"
+    exit 1
+fi
+
+case "$#" in
+    1 )     NODE_NAME=$1                ;;
+    2 )     NODE_NAME=$1;BS_VERSION=$2  ;;
+esac
 
 echo "[INFO] The Node Name will be set to ${NODE_NAME}"
 echo "[INFO] Version : ${BS_VERSION}"

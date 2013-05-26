@@ -7,24 +7,31 @@
 ### Variables ###
 PKGIN_VTA_REPO="http://tornado.virtua.ch/smartos_local/packages/All"
 PKGIN_CNF_PATH="/opt/local/etc/pkgin/repositories.conf"
-BS_VERSION="$3:-2013Q1"
+BS_VERSION="2013Q1"
 BS_SALT_BASEURL="https://raw.github.com/virtua-network/salt-bootstrap"
 BS_SALT_VER="${BS_VERSION}/bootstrap-salt.sh"
 BS_SALT_ETC_DIR="/opt/local/etc/salt"
 BS_SALT_TYPE="minion"
-NODE_NAME="$2:-newnode"
+NODE_NAME="newnode"
 
 ### Basic checks
-if [ $(whoami) != "root" ] ; then
+if [ $(whoami) != "root" ]; then
     echo "Requires root privileges to install."
     exit 1
 fi
 
-case $1 in
-    "master") echo "[!!] Installing salt master";BS_SALT_TYPE="master";;
-    "*") echo "[!!] Installing salt minion";;
+if [ "$#" -gt 3 ]; then
+    echo "[ERROR] sorry this script takes maximum 3 arguments"
+    exit 1
+fi
+
+case "$#" in
+    1 ) [ "$1" = "master" ] && BS_SALT_TYPE=$1                              ;;
+    2 ) [ "$1" = "master" ] && BS_SALT_TYPE=$1;NODE_NAME=$2                 ;;
+    3 ) [ "$1" = "master" ] && BS_SALT_TYPE=$1;NODE_NAME=$2;BS_VERSION=$3   ;;
 esac
 
+echo "[INFO] Installing salt-${BS_SALT_TYPE}"
 echo "[INFO] The Node Name will be set to ${NODE_NAME}"
 echo "[INFO] Version : ${BS_VERSION}"
 
