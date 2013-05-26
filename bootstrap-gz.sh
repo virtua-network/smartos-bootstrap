@@ -9,10 +9,11 @@ BS_PKGIN_BASEURL="http://pkgsrc-eu-ams.joyent.com/packages/SmartOS/bootstrap"
 BS_PKGIN_VER="bootstrap-2013Q1-x86_64.tar.gz"
 PKGIN_VTA_REPO="http://tornado.virtua.ch/smartos_local/packages/All"
 PKGIN_CNF_PATH="/opt/local/etc/pkgin/repositories.conf"
+BS_VERSION="$2:-2013Q1"
 BS_SALT_BASEURL="https://raw.github.com/virtua-network/salt-bootstrap"
-BS_SALT_VER="2013Q1/bootstrap-salt.sh"
+BS_SALT_VER="${BS_VERSION}/bootstrap-salt.sh"
 BS_SALT_ETC_DIR="/opt/local/etc/salt"
-NODE_NAME="newnode"
+NODE_NAME="$1:-newnode"
 
 ### Basic checks ###
 if [ -f /opt/local/bin/pkgin ]; then
@@ -20,10 +21,8 @@ if [ -f /opt/local/bin/pkgin ]; then
 	exit 1
 fi
 
-if [ $1 ] ; then
-    echo "The Node Name will be set to $1."
-    NODE_NAME=$1
-fi
+echo "[INFO] The Node Name will be set to ${NODE_NAME}"
+echo "[INFO] Version : ${BS_VERSION}"
 
 ### Step 1. Install pkgin in the CN ###
 # From http://wiki.smartos.org/display/DOC/Installing+pkgin
@@ -48,7 +47,7 @@ pkg_add ${PKGIN_VTA_REPO}/py27-msgpack-0.1.13.tgz
 ### Step 3. Install Salt via bootstrap ###
 echo "[*] STEP 3 - Salt Stack install"
 curl -s -k -L ${BS_SALT_BASEURL}/${BS_SALT_VER} | \
-env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- git 2013Q1 
+env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- git ${BS_VERSION} 
 
 ### Step 4. Naming the Node ###
 echo "[*] STEP 4 - Naming Node"

@@ -7,11 +7,12 @@
 ### Variables ###
 PKGIN_VTA_REPO="http://tornado.virtua.ch/smartos_local/packages/All"
 PKGIN_CNF_PATH="/opt/local/etc/pkgin/repositories.conf"
+BS_VERSION="$3:-2013Q1"
 BS_SALT_BASEURL="https://raw.github.com/virtua-network/salt-bootstrap"
-BS_SALT_VER="2013Q1/bootstrap-salt.sh"
+BS_SALT_VER="${BS_VERSION}/bootstrap-salt.sh"
 BS_SALT_ETC_DIR="/opt/local/etc/salt"
 BS_SALT_TYPE="minion"
-NODE_NAME="newnode"
+NODE_NAME="$2:-newnode"
 
 ### Basic checks
 if [ $(whoami) != "root" ] ; then
@@ -24,10 +25,8 @@ case $1 in
     "*") echo "[!!] Installing salt minion";;
 esac
 
-if [ $2 ] ; then
-    echo "The Node Name will be set to $2."
-    NODE_NAME=$2
-fi
+echo "[INFO] The Node Name will be set to ${NODE_NAME}"
+echo "[INFO] Version : ${BS_VERSION}"
 
 ### Step 1. Prepare the environment ###
 echo "[*] STEP 1 - Prepare the environment"
@@ -44,10 +43,10 @@ pkg_add ${PKGIN_VTA_REPO}/py27-msgpack-0.1.13.tgz
 echo "[*] STEP 2 - Salt Stack install"
 if [ ${BS_SALT_TYPE} = "master" ]; then
     curl -s -k -L ${BS_SALT_BASEURL}/${BS_SALT_VER} | \
-    env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- -M git 2013Q1
+    env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- -M git ${BS_VERSION}
 else
     curl -s -k -L ${BS_SALT_BASEURL}/${BS_SALT_VER} | \
-    env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- git 2013Q1 
+    env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- git ${BS_VERSION}
 fi
 
 ### Step 3. Naming the Node ###
