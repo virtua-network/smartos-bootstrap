@@ -9,7 +9,7 @@ BS_PKGIN_BASEURL="http://pkgsrc-eu-ams.joyent.com/packages/SmartOS/bootstrap"
 BS_PKGIN_VER="bootstrap-2013Q2-x86_64.tar.gz"
 PKGIN_VTA_REPO="http://tornado.virtua.ch/smartos_local/packages/All"
 PKGIN_CNF_PATH="/opt/local/etc/pkgin/repositories.conf"
-BS_VERSION="2013Q1"
+BS_VERSION="develop"
 BS_SALT_BASEURL="https://raw.github.com/virtua-network/salt-bootstrap"
 BS_SALT_VER="${BS_VERSION}/bootstrap-salt.sh"
 BS_SALT_ETC_DIR="/opt/local/etc/salt"
@@ -47,7 +47,7 @@ pkgin -fy up
 ### Step 2. Install Salt via bootstrap ###
 echo "[*] STEP 2 - Salt Stack install"
 curl -s -k -L ${BS_SALT_BASEURL}/${BS_SALT_VER} | \
-env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- ${BS_VERSION} 
+env BS_SALT_ETC_DIR=${BS_SALT_ETC_DIR} sh -s -- stable 
 
 ### Step 3. Naming the Node ###
 echo "[*] STEP 3 - Naming Node"
